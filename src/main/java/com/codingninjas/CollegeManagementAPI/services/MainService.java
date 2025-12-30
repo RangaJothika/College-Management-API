@@ -33,7 +33,9 @@ public class MainService {
 
 			}
 	 */
-
+	public double getAverageGradesOfStudent(int id) {
+		return gradeRepository.getAverageGradesOfStudent(id);
+	}
 
 	public Student getStudentById(int id) {
 		return studentRepository.findById(id).get();

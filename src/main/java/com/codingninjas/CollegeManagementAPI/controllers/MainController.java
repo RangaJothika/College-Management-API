@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.codingninjas.CollegeManagementAPI.entities.Course;
 import com.codingninjas.CollegeManagementAPI.entities.CourseMarks;
 import com.codingninjas.CollegeManagementAPI.entities.Student;
@@ -62,5 +61,9 @@ public class MainController {
 @GetMapping("/students/{id}/courses")
 public List<String> getCoursesNameByStudentID(@PathVariable("id") int id){
 	return service.getCoursesNameByStudentId(id);
+}
+@GetMapping("/student/{id}/averageGrade")
+public double getAverageGradesOfStudent(@PathVariable int id) {
+	return service.getAverageGradesOfStudent(id);
 }
 }
