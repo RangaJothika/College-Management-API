@@ -1,7 +1,6 @@
 package com.codingninjas.CollegeManagementAPI.controllers;
 
-import java.util.List;
-
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.codingninjas.CollegeManagementAPI.entities.Course;
 import com.codingninjas.CollegeManagementAPI.entities.CourseMarks;
+import com.codingninjas.CollegeManagementAPI.entities.Grade;
 import com.codingninjas.CollegeManagementAPI.entities.Student;
 import com.codingninjas.CollegeManagementAPI.services.MainService;
 
@@ -30,10 +30,10 @@ public class MainController {
 		service.setStudent(student);
 	}
 
-	@PostMapping("/student/{id}/courses_marks")
-	public void saveCoursesWithMarks(@RequestBody List<CourseMarks> courses, @PathVariable int id) {
-		service.setCourses(courses, id);
-	}
+//	@PostMapping("/student/{id}/courses_marks")
+//	public void saveCoursesWithMarks(@RequestBody Set<Course> courses, @PathVariable int id) {
+//		service.setCourses(courses, id);
+//	}
 
 	@GetMapping("/students")
 	public List<Student> getAllStudents() {
@@ -48,6 +48,15 @@ public class MainController {
 	 public void saveCourse(@RequestBody Course course) {
 	 service.saveCourse(course);
 	 }
+	 @PostMapping("/student/{studId}/course")
+	 public void addCourseToStudent(@RequestBody Course course,@PathVariable int studId) {
+		 service.setCourses(course,studId);
+	 }
+	 @PostMapping("/student/{studId}/course/{courseId}/grade")
+	 public void setGradeOfStuForACourse(@RequestBody Grade grade, @PathVariable int studId, @PathVariable int courseId) {
+	 service.setGradeOfStuForACourse(grade,studId,courseId);
+	 }
+	 
 	/*
 	 * 1. Write a controller method with name getCoursesNameByStudentID, which
 	 * returns a List of String (List<String>)

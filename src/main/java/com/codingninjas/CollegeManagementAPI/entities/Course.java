@@ -3,12 +3,11 @@ package com.codingninjas.CollegeManagementAPI.entities;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,21 +24,23 @@ public class Course {
 
 	private String name;
 
-	private double studentMarks;
-
-	public double getStudentMarks() {
-		return studentMarks;
+	public Course(String name) {
+		this.name = name;
 	}
 
-	public void setStudentMarks(double studentMarks) {
-		this.studentMarks = studentMarks;
+	public Course() {
 	}
 
-	@ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "courses", cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JsonIgnore
 	private Set<Student> students = new HashSet<>();
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
+	@JsonIgnore
 	private List<Grade> grades;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
+	@JsonIgnore
+	private List<CourseMarks> courseMarks;
 
 	public int getId() {
 		return id;
@@ -72,6 +73,5 @@ public class Course {
 	public void setGrades(List<Grade> grades) {
 		this.grades = grades;
 	}
-
 
 }

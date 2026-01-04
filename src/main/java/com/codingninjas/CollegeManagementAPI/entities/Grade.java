@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Grade {
@@ -20,12 +21,20 @@ public class Grade {
 
 	private double marks;
 
+	public Grade(double marks) {
+		super();
+		this.marks = marks;
+	}
+
+	public Grade() {
+	}
+
 	@ManyToOne
-	@JoinColumn(name="student_id")
+	@JoinColumn(name = "student_id")
 	private Student student;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="course_id")
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinColumn(name = "course_id")
 	private Course course;
 
 	public int getId() {
@@ -59,6 +68,5 @@ public class Grade {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
-
 
 }
